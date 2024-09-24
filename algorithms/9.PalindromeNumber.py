@@ -1,10 +1,14 @@
-def isPalindrome(x: int) -> bool:     
-#     # 121 -> True
-    x_str = str(x)
+"""
+Given an integer x, return true if x is a palindrome, and false otherwise.
+https://leetcode.com/problems/palindrome-number/description/
+"""
 
-    if x_str == x_str[::-1]:
-        return True
-    else:
-        return False
+class Solution:
+    def isPalindrome(self, x: int) -> bool:  
+        # 121 -> True
+        x_str = str(x)
 
-print(isPalindrome(1211))
+        if x_str == x_str[::-1]:
+            return True
+        else:
+            return False
