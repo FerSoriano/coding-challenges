@@ -32,24 +32,26 @@ class Solution:
 sol = Solution()
 #           012345678910
 haystack = "mississippi"
-needle = "issipi"
+needle = "issippi"
 print(sol.strStr(haystack,needle))
 
 """
-if haystack == needle:
-            return 0        
-        i = 0
-        for j,e in enumerate(haystack):
-            if i == len(needle):
-                break
-            if e == needle[i]:
-                i += 1
-            else:
-                i = 0
+ChatGPT solution:
 
-        if len(needle) == 1:
-            index = j
-        else:
-            index = j - i
-        return index if i > 0 else -1
+class Solution:
+    def strStr(self, haystack: str, needle: str) -> int:
+        # Caso especial: si needle está vacío, retorna 0
+        if not needle:
+            return 0
+        # Si el largo de haystack es menor que el de needle, no puede haber coincidencia
+        if len(haystack) < len(needle):
+            return -1
+        
+        # Recorrer haystack hasta que el resto sea menor que needle
+        for i in range(len(haystack) - len(needle) + 1):
+            # Si encuentras la subcadena needle en haystack, retorna el índice
+            if haystack[i:i+len(needle)] == needle:
+                return i
+        # Si no se encuentra needle en haystack, retornar -1
+        return -1
 """
