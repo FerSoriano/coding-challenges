@@ -1,34 +1,27 @@
-# No lo lee leetcode, funciona... pero en leetcode se le deben de pasar nodos en lugar de listas
+from typing import Optional
+
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
 class Solution:
-    def mergeTwoLists(self, list1: list, list2: list) -> list:
-        
-        i = 0
-        j = 0
-        list3 = []
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode()
+        cur = dummy
 
-        if not list1:
-            return list2
-        
-        while i < len(list1):
-            if j < len(list2):
-                if list1[i] < list2[j]:
-                    list3.append(list1[i])
-                    i += 1
-                    continue
-                list3.append(list2[j])
-                j += 1
+        while list1 and list2:
+            if list1.val < list2.val:
+                cur.next = list1
+                list1 = list1.next
+                cur = cur.next  # <- Aquí estaba el error, corregido
             else:
-                list3.append(list1[i])
-                i += 1
-        
-        while j < len(list2):
-            list3.append(list2[j])
-            j += 1
-        
-        return list3
+                cur.next = list2
+                list2 = list2.next
+                cur = cur.next  # <- Aquí también, corregido
 
-sol = Solution()
-l1 = [1,2,2,2,3]
-l2 = [0,3,5,7]
+        cur.next = list1 if list1 else list2  # No hace falta la condición extra
 
-print(sol.mergeTwoLists(l1, l2))
+        return dummy.next
