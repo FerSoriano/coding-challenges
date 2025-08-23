@@ -21,7 +21,7 @@ where dd is the two-digit day, mm is the two-digit month, and yyyy is y.
 
 std::string dayOfProgrammer(int year) {
     const int DAY_OF_PROGRAMMER = 256;
-    std::unordered_map<int,int> months_int = {
+    std::unordered_map<int,int> months = {
         {1, 31}, {2, 28}, {3, 31},
         {4, 30}, {5, 31}, {6, 30},
         {7, 31}, {8, 31}, {9, 30},
@@ -36,21 +36,22 @@ std::string dayOfProgrammer(int year) {
         if (year % 400 == 0 || (year % 4 ==  0 && year % 100 != 0)) leap = true;
     }
     
-    if (leap) months_int[2]++; // funciona?
+    if (year == 1918) months[2] -= 13;
+    if (leap) months[2]++;
 
     int days_count = 0, day, month;
     for (int i = 1; i <= 12; i++){
         if (days_count > DAY_OF_PROGRAMMER){
-            days_count -= months_int[i - 1]; // ignore current month
+            days_count -= months[i - 1]; // ignore current month
             day = DAY_OF_PROGRAMMER - days_count;
             month = i - 1;
             break;
         }
-        days_count += months_int[i];
+        days_count += months[i];
     }
 
-    std::string month_str;
-    if (month < 10) month_str = "0" + std::to_string(month);
+    std::string month_str = std::to_string(month);
+    if (month < 10) month_str = "0" + month_str;
 
     return std::to_string(day) + "." + month_str + "." + std::to_string(year);
 }
@@ -62,6 +63,7 @@ int main() {
     std::cout<<dayOfProgrammer(2016)<<'\n';
     std::cout<<dayOfProgrammer(2017)<<'\n';
     std::cout<<dayOfProgrammer(1800)<<'\n';
-    // TODO: validate the one that failed
+    std::cout<<dayOfProgrammer(1918)<<'\n';
+
     return 0;
 }
